@@ -11,7 +11,7 @@ namespace SQLClient_Products.Models
         //TODO: Fill in product data access methods....
         
         // InsertProduct - inserts a product into the database
-        public bool InsertProduct(string name, string description, decimal price, string imageUrl)
+        public static bool InsertProduct(string name, string description, decimal price, string imageUrl)
         {
             using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
@@ -21,7 +21,7 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //make command
-                    using (SqlCommand command = new SqlCommand("INSERT INTO Products Values (@name, @description,@price, @imageUrl)",con))
+                    using (SqlCommand command = new SqlCommand("INSERT INTO Products (Name,[Description],Price,ImageURL) VALUES(@name, @description,@price, @imageUrl)",con))
                     {
                         // make parameters
                         command.Parameters.Add(new SqlParameter("name", name));
@@ -76,14 +76,13 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //sql call
-                    using (SqlCommand command = new SqlCommand("UPDATE Contacts SET Name = @name, Description = @description, Price = @price, ImageURL = @imageUrl WHERE ContactId = @id ", con))
+                    using (SqlCommand command = new SqlCommand("UPDATE Products SET Name = @name, [Description] = @description, Price = @price WHERE ProductId = @id", con))
                     {
                         //parameters to avoid Injection
                         command.Parameters.Add(new SqlParameter("id", id));
                         command.Parameters.Add(new SqlParameter("name", name));
                         command.Parameters.Add(new SqlParameter("description", description));
                         command.Parameters.Add(new SqlParameter("price", price));
-                        command.Parameters.Add(new SqlParameter("imageUrl", imageUrl));
                         //execute
                         command.ExecuteNonQuery();
                         return true;
@@ -109,8 +108,9 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //make command
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM Contacts", con))
+                    using (SqlCommand command = new SqlCommand("SELECT * FROM Contacts WHERE ProductId = @id", con))
                     {
+                        command.Parameters.Add(new SqlParameter("id", id));
                         //make reader
                         SqlDataReader reader = command.ExecuteReader();
                         while (reader.Read())
@@ -122,7 +122,7 @@ namespace SQLClient_Products.Models
                             string imageUrl = reader.GetString(4);
                             allProducts.Add(new Product(pId, name, description, price, imageUrl));
                         }
-                        return allProducts.Where(x => x.Id == id).First();
+                        return allProducts.Where(x => x.Id == id).Single();
                     }
                 }
                 catch

@@ -1,7 +1,29 @@
-﻿
+﻿@model SQLClient_Products.Models.Product
 @{
     ViewBag.Title = "Edit";
 }
 
-<h2>Edit</h2>
+<h2>Edit Product @Model.Name</h2>
+
+<form action="@Url.Action("Edit","Products")" enctype="multipart/form-data" method="post">
+    <input type="hidden" name="ProductId" id="ProductId" value="@Model.Id"/>
+    <div class="form-group">
+        <label for="Name">Name</label>
+        <input type="text" class="form-control" id="Name" name="Name" value="@Model.Name">
+    </div>
+    <div class="form-group">
+        <label for="Description">Description of Item</label>
+        <textarea class="form-control" name="Description" id="Description">@Model.Description</textarea>
+    </div>
+    <div class="form-group">
+        <label for="Price">Price</label>
+        <input type="text" class="form-control" id="Price" name="Price" value="@Model.Price">
+    </div>
+    <div>
+        <input type="file" id="fileUpload" name="file" />
+    </div>
+    
+    <button type="submit" class="btn btn-default">Save Changes</button>
+</form>
+
 

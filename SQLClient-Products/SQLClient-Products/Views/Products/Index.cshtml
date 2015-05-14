@@ -28,10 +28,10 @@
                 <td>@product.Price</td>
                 <td>@product.ImageUrl</td>
                 <td>
-                    <a href="@Url.Action("Edit", "Product", new {id = product.Id })" class="btn btn-primary btn-sm">
+                    <a href="@Url.Action("Edit", "Products", new {id = product.Id })" class="btn btn-primary btn-sm">
                         Edit
                     </a>
-                    <a href="@Url.Action("Delete", "Product", new {id = product.Id })" class="btn btn-danger btn-sm" >
+                    <a href="@Url.Action("Delete", "Products", new {id = product.Id })" class="btn btn-danger btn-sm" >
                         Delete
                     </a>
                 </td>

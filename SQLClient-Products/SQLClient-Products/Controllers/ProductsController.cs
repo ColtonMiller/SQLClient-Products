@@ -26,26 +26,27 @@ namespace SQLClient_Products.Controllers
         }
         //The POST action will accept a Product object as an argument, handle the uploading of an image file, then add it to the database.
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase file)
+        public ActionResult Create(HttpPostedFileBase file, Product product)
         {
-            //make try to catch exceptions
-            try
-            {
+            
                 // get the filename
                 var fileName = Guid.NewGuid().ToString().Substring(0, 10) + "-" + Path.GetFileName(file.FileName);
                 //get filename path
-                var fileNamePath = Path.Combine(Server.MapPath("~/Contents/Uploads"), fileName);
+                var fileNamePath = Path.Combine(Server.MapPath("~/Content/Uploads/"), fileName);
                 //save the file
                 file.SaveAs(fileNamePath);
                 //tell user file was uploaded
                 ViewBag.Message = "File uploaded";
-            }
-            catch (Exception e)
-            {
-                //displays exception message
-                ViewBag.message = e.Message; 
-            }
-            return View();
+                if (ProductRepository.InsertProduct(product.Name,product.Description,product.Price,fileName))
+                {
+                    return RedirectToAction("Index"); 
+                }
+                else
+                {
+                    ViewBag.message = "Failed to insert record";
+                    return RedirectToAction("Index"); 
+                }
+            
         }
         //TODO: Create Edit actions.  
         //The GET action will accept an integer Id as an arguement.  The action will retrieve the product from the database, and pass it to the view to display the Edit form to the user, with the field values populated from the database.
@@ -61,12 +62,12 @@ namespace SQLClient_Products.Controllers
         {
             if (ProductRepository.UpdateProduct(id,product.Name,product.Description,product.Price,product.ImageUrl))
             {
-                return RedirectToAction("index");
+                return RedirectToAction("Index");
             }
             else
             {
                 ViewBag.Error = "Could not update";
-                return RedirectToAction("index");
+                return View(product);
             }
         }
         //TODO: Create Delete action
