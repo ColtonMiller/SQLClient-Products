@@ -76,14 +76,13 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //sql call
-                    using (SqlCommand command = new SqlCommand("UPDATE Products SET Name = @name, [Description] = @description, Price = @price, ImageURL = @imageUrl WHERE ProductId = @id", con))
+                    using (SqlCommand command = new SqlCommand("UPDATE Products SET Name = @name, [Description] = @description, Price = @price WHERE ProductId = @id", con))
                     {
                         //parameters to avoid Injection
                         command.Parameters.Add(new SqlParameter("Id", id));
                         command.Parameters.Add(new SqlParameter("Name", name));
                         command.Parameters.Add(new SqlParameter("Description", description));
                         command.Parameters.Add(new SqlParameter("Price", price));
-                        command.Parameters.Add(new SqlParameter("ImageURL", imageUrl));
                         //execute
                         command.ExecuteNonQuery();
                         return true;
@@ -98,7 +97,7 @@ namespace SQLClient_Products.Models
         // GetProductById - gets a single product from the database by it's Id
         public static Product GetProductById(int id)
         {
-            //add all contacts to new list
+            //add all products to new list
             var product = new Product();
             //make connection 
             using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
@@ -109,7 +108,7 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //make command
-                    using (SqlCommand command = new SqlCommand("SELECT * FROM Contacts WHERE ProductId = @id", con))
+                    using (SqlCommand command = new SqlCommand("SELECT * FROM Products WHERE ProductId = @id", con))
                     {
                         command.Parameters.Add(new SqlParameter("id", id));
                         //make reader
@@ -146,7 +145,7 @@ namespace SQLClient_Products.Models
                     //make command
                     using (SqlCommand command = new SqlCommand("SELECT * FROM Products", con))
                     {
-                        //add all contacts to new list
+                        //add all products to new list
                         List<Product> allProducts = new List<Product>();
                         //make reader
                         SqlDataReader reader = command.ExecuteReader();
