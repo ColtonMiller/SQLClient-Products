@@ -75,8 +75,9 @@ namespace SQLClient_Products.Controllers
         [HttpGet]
         public ActionResult Delete(int id)
         {
-            Product product = ProductRepository.GetProductById(id);
-            return RedirectToAction("Delete");
+            Product product = new Product();
+            product.Id = id;
+            return View(product);
         }
         //TODO: Create DeleteConfirmation action
         //The GET action will accept an integer Id as an arguement and delete the product from the database.  After the deletion is complete, redirect the user to the Index (listing) action.

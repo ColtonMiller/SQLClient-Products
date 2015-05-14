@@ -1,8 +1,15 @@
-﻿
+﻿@model SQLClient_Products.Models.Product
 @{
     ViewBag.Title = "Delete";
 }
 
-<h2>Are you sure you want to delete?</h2>
+<h2>Are you sure you want to delete? @Model.Name</h2>
+
+<a href="@Url.Action("DeleteConfirmation", "Products", new {id = @Model.Id })" class="btn btn-primary btn-sm">
+    Yes
+</a>
+<a href="@Url.Action("Index", "Products")" class="btn btn-danger btn-sm">
+    Dear God No!
+</a>
 
 
