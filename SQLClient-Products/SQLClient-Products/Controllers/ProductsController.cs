@@ -59,7 +59,15 @@ namespace SQLClient_Products.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Product product)
         {
-            return View(ProductRepository.UpdateProduct(id,product.Name,product.Description,product.Price,product.ImageUrl));
+            if (ProductRepository.UpdateProduct(id,product.Name,product.Description,product.Price,product.ImageUrl))
+            {
+                return RedirectToAction("index");
+            }
+            else
+            {
+                ViewBag.Error = "Could not update";
+                return RedirectToAction("index");
+            }
         }
         //TODO: Create Delete action
         //The GET action will accept an integer Id as an arguement and retrieve the product from the database.  The product object will be passed to the view to display to the user a confirmation screen with a button to confirm that links to the DeleteConfirmation action.
@@ -71,19 +79,12 @@ namespace SQLClient_Products.Controllers
         }
         //TODO: Create DeleteConfirmation action
         //The GET action will accept an integer Id as an arguement and delete the product from the database.  After the deletion is complete, redirect the user to the Index (listing) action.
-        //[HttpPost]
-        //public ActionResult Delete(int pid)
-        //{
-        //    if (ProductRepository.DeleteProduct(pid))
-        //    {
-        //        return RedirectToAction("Index");
-        //    }
-        //    else
-        //    {
-        //        ViewBag.Error = "Failed to Delete";
-        //        return RedirectToAction("Index");
-        //    }              
-        //}
+        [HttpGet]
+        public ActionResult DeleteConfirmation(int id)
+        {
+            ProductRepository.DeleteProduct(id);
+            return RedirectToAction("Index");
+        }
 
     }
 }
