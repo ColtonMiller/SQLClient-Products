@@ -76,13 +76,14 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //sql call
-                    using (SqlCommand command = new SqlCommand("UPDATE Products SET Name = @name, [Description] = @description, Price = @price WHERE ProductId = @id", con))
+                    using (SqlCommand command = new SqlCommand("UPDATE Products SET Name = @name, [Description] = @description, Price = @price, ImageURL = @imageUrl WHERE ProductId = @id", con))
                     {
                         //parameters to avoid Injection
-                        command.Parameters.Add(new SqlParameter("id", id));
-                        command.Parameters.Add(new SqlParameter("name", name));
-                        command.Parameters.Add(new SqlParameter("description", description));
-                        command.Parameters.Add(new SqlParameter("price", price));
+                        command.Parameters.Add(new SqlParameter("Id", id));
+                        command.Parameters.Add(new SqlParameter("Name", name));
+                        command.Parameters.Add(new SqlParameter("Description", description));
+                        command.Parameters.Add(new SqlParameter("Price", price));
+                        command.Parameters.Add(new SqlParameter("ImageURL", imageUrl));
                         //execute
                         command.ExecuteNonQuery();
                         return true;
@@ -98,7 +99,7 @@ namespace SQLClient_Products.Models
         public static Product GetProductById(int id)
         {
             //add all contacts to new list
-            List<Product> allProducts = new List<Product>();
+            var product = new Product();
             //make connection 
             using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
@@ -120,10 +121,10 @@ namespace SQLClient_Products.Models
                             string description = reader.GetString(2);
                             decimal price = reader.GetDecimal(3);
                             string imageUrl = reader.GetString(4);
-                            allProducts.Add(new Product(pId, name, description, price, imageUrl));
+                            product = new Product(pId, name, description, price, imageUrl);
                         }
-                        return allProducts.Where(x => x.Id == id).Single();
                     }
+                    return product;
                 }
                 catch
                 {

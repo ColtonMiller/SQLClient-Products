@@ -107,3 +107,4 @@ E:\Documents\GitHub\SQLClient-Products\SQLClient-Products\SQLClient-Products\bin
 E:\Documents\GitHub\SQLClient-Products\SQLClient-Products\SQLClient-Products\bin\Microsoft.Owin.Security.Twitter.xml
 E:\Documents\GitHub\SQLClient-Products\SQLClient-Products\SQLClient-Products\bin\Microsoft.Owin.Security.MicrosoftAccount.xml
 E:\Documents\GitHub\SQLClient-Products\SQLClient-Products\SQLClient-Products\obj\Debug\SQLClient-Products.csprojResolveAssemblyReference.cache
+C:\Users\Technologist\Documents\GitHub\SQLClient-Products\SQLClient-Products\SQLClient-Products\obj\Debug\SQLClient-Products.csprojResolveAssemblyReference.cache
