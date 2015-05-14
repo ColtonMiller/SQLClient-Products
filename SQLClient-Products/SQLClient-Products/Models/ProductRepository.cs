@@ -67,7 +67,7 @@ namespace SQLClient_Products.Models
             }
         }
         // UpdateProduct - updates a product in the database
-        public static bool UpdateProduct(int id, string name, string description, double price, string imageUrl)
+        public static bool UpdateProduct(int id, string name, string description, decimal price, string imageUrl)
         {
             using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {

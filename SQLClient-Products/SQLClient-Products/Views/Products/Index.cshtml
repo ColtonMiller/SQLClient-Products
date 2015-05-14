@@ -1,7 +1,41 @@
-﻿@model IEnumerable
-@{
-    ViewBag.Title = "Index";
-}
+﻿@model IEnumerable<SQLClient_Products.Models.Product>
+    @{
+        ViewBag.Title = "Index";
+    }
 
-<h2>Index</h2>
+    <h2>Product List</h2>
+
+    @if (ViewBag.Error != null)
+    {
+        <div class="warning">@ViewBag.Error</div>
+    }
+
+
+    <table class="table table-hover">
+        <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Description</th>
+            <th>Price</th>
+            <th>ImageUrl</th>
+        </tr>
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.Id</td>
+                <td>@product.Name</td>
+                <td>@product.Description</td>
+                <td>@product.Price</td>
+                <td>@product.ImageUrl</td>
+                <td>
+                    <a href="@Url.Action("Edit", "Product", new {id = product.Id })" class="btn btn-primary btn-sm">
+                        Edit
+                    </a>
+                    <a href="@Url.Action("Delete", "Product", new {id = product.Id })" class="btn btn-danger btn-sm" >
+                        Delete
+                    </a>
+                </td>
+            </tr>
+        }
+    </table>
 
