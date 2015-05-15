@@ -30,15 +30,15 @@ namespace SQLClient_Products.Controllers
         {
             
                 // get the filename
-                var fileName = Guid.NewGuid().ToString().Substring(0, 10) + "_" + System.IO.Path.GetFileName(file.FileName);
+                var filename = Guid.NewGuid().ToString().Substring(0, 10) + "_" + Path.GetFileName(file.FileName);
                 //get filename path
-                var fileNamePath = Path.Combine(Server.MapPath("/Content/Uploads/"), fileName);
+                var filenamePath = Path.Combine(Server.MapPath("~/Content/Uploads"), filename);
                 //save the file
-                file.SaveAs(fileNamePath);
+                file.SaveAs(filenamePath);
+                product.ImageUrl = "Content/Uploads/" + filename;
                 //tell user file was uploaded
-                product.ImageUrl = ("~/Content/Uploads/" + fileName);
                 ViewBag.Message = "File uploaded";
-                if (ProductRepository.InsertProduct(product.Name, product.Description, product.Price, fileName))
+                if (ProductRepository.InsertProduct(product.Name, product.Description, product.Price, product.ImageUrl))
                 {
                     return RedirectToAction("Index"); 
                 }
