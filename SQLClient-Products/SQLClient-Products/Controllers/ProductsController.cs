@@ -28,17 +28,7 @@ namespace SQLClient_Products.Controllers
         [HttpPost]
         public ActionResult Create(HttpPostedFileBase file, Product product)
         {
-            
-                // get the filename
-                var filename = Guid.NewGuid().ToString().Substring(0, 10) + "_" + Path.GetFileName(file.FileName);
-                //get filename path
-                var filenamePath = Path.Combine(Server.MapPath("~/Content/Uploads"), filename);
-                //save the file
-                file.SaveAs(filenamePath);
-                product.ImageUrl = "Content/Uploads/" + filename;
-                //tell user file was uploaded
-                ViewBag.Message = "File uploaded";
-                if (ProductRepository.InsertProduct(product.Name, product.Description, product.Price, product.ImageUrl))
+                if (ProductRepository.InsertProduct(product.Name, product.Description, product.Price))
                 {
                     return RedirectToAction("Index"); 
                 }
@@ -61,7 +51,7 @@ namespace SQLClient_Products.Controllers
         [HttpPost]
         public ActionResult Edit(int id, Product product)
         {
-            if (ProductRepository.UpdateProduct(id,product.Name,product.Description,product.Price,product.ImageUrl))
+            if (ProductRepository.UpdateProduct(id,product.Name,product.Description,product.Price))
             {
                 return RedirectToAction("Index");
             }

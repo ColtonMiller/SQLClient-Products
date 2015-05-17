@@ -11,7 +11,7 @@ namespace SQLClient_Products.Models
         //TODO: Fill in product data access methods....
         
         // InsertProduct - inserts a product into the database
-        public static bool InsertProduct(string name, string description, decimal price, string imageUrl)
+        public static bool InsertProduct(string name, string description, decimal price)
         {
             using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
@@ -21,13 +21,12 @@ namespace SQLClient_Products.Models
                 try
                 {
                     //make command
-                    using (SqlCommand command = new SqlCommand("INSERT INTO Products (Name,[Description],Price,ImageURL) VALUES(@name, @description,@price, @imageUrl)",con))
+                    using (SqlCommand command = new SqlCommand("INSERT INTO Products (Name,[Description],Price,ImageURL) VALUES(@name, @description,@price)",con))
                     {
                         // make parameters
                         command.Parameters.Add(new SqlParameter("name", name));
                         command.Parameters.Add(new SqlParameter("description", description));
                         command.Parameters.Add(new SqlParameter("price", price));
-                        command.Parameters.Add(new SqlParameter("imageUrl",imageUrl));
                         //execute
                         command.ExecuteNonQuery();
                         return true;
@@ -67,7 +66,7 @@ namespace SQLClient_Products.Models
             }
         }
         // UpdateProduct - updates a product in the database
-        public static bool UpdateProduct(int id, string name, string description, decimal price, string imageUrl)
+        public static bool UpdateProduct(int id, string name, string description, decimal price)
         {
             using (SqlConnection con = new SqlConnection(System.Configuration.ConfigurationManager.ConnectionStrings["DefaultConnection"].ConnectionString))
             {
@@ -119,8 +118,7 @@ namespace SQLClient_Products.Models
                             string name = reader.GetString(1);
                             string description = reader.GetString(2);
                             decimal price = reader.GetDecimal(3);
-                            string imageUrl = reader.GetString(4);
-                            product = new Product(pId, name, description, price, imageUrl);
+                            product = new Product(pId, name, description, price);
                         }
                     }
                     return product;
@@ -155,8 +153,7 @@ namespace SQLClient_Products.Models
                             string name = reader.GetString(1);
                             string description = reader.GetString(2);
                             decimal price = reader.GetDecimal(3);
-                            string imageUrl = reader.GetString(4);
-                            allProducts.Add(new Product(pid, name, description, price, imageUrl));
+                            allProducts.Add(new Product(pid, name, description, price));
                         }
                         return allProducts;
                     }
