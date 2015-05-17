@@ -17,7 +17,6 @@
             <th>Name</th>
             <th>Description</th>
             <th>Price</th>
-            <th>Image</th>
         </tr>
         @foreach (var product in Model)
         {
@@ -26,8 +25,10 @@
                 <td>@product.Name</td>
                 <td>@product.Description</td>
                 <td>@product.Price</td>
-                <td><img class="img-thumbnail" style="width:200px;"  src="@product.ImageUrl" /></td>
                 <td>
+                    <a href="@Url.Action("Edit", "Products", new {id = product.Id })" class="btn btn-success btn-sm">
+                        Images
+                    </a>
                     <a href="@Url.Action("Edit", "Products", new {id = product.Id })" class="btn btn-primary btn-sm">
                         Edit
                     </a>
