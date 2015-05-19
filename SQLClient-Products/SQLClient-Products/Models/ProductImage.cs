@@ -9,20 +9,18 @@ namespace SQLClient_Products.Models
     {
         //make properties
         public int ProductImageId { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
         public int ProductId { get; set; }
+        public string ImageUrl { get; set; }
 
         //empty constructor
         public ProductImage() { }
 
         //constructor that takes in all four arguments 
-        public ProductImage(int productImageId, string title, string description, int productId)
+        public ProductImage(int productImageId, int productId, string imageURL)
         {
             this.ProductImageId = productImageId;
-            this.Title = title;
-            this.Description = description;
             this.ProductId = productId;
+            this.ImageUrl = imageURL;
         }
     }
 }
