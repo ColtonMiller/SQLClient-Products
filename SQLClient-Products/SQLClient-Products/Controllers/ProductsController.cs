@@ -26,7 +26,7 @@ namespace SQLClient_Products.Controllers
         }
         //The POST action will accept a Product object as an argument, handle the uploading of an image file, then add it to the database.
         [HttpPost]
-        public ActionResult Create(HttpPostedFileBase file, Product product)
+        public ActionResult Create(Product product)
         {
                 if (ProductRepository.InsertProduct(product.Name, product.Description, product.Price))
                 {
